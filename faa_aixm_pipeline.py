@@ -75,7 +75,11 @@ USER_AGENT = "Mozilla/5.0 (compatible; FAA-AIXM-Downloader/1.1; +https://www.faa
 DATE_LINK_RE = re.compile(r"/NASR_Subscription/(\d{4}-\d{2}-\d{2})/?$")
 
 SESSION = requests.Session()
-SESSION.headers.update({"User-Agent": USER_AGENT})
+SESSION.headers.update({
+    "User-Agent": USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9"
+})
 
 # ------------------------------
 # Data classes
