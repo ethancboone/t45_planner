@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # If your site is just static files already in web/, skip any build
+      # If you need a build, run it here and output to a folder (e.g., dist/)
+      # - name: Build
+      #   run: |
+      #     cd web
+      #     npm ci
+      #     npm run build
+      #   # and later set path to the build output instead of web
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact (the folder to publish)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "web"   # change to your build output if you build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
