@@ -16,9 +16,11 @@ async function loadData() {
   }
   function label(mode) { return mode === 'auto' ? 'Theme: Auto' : (mode === 'dark' ? 'Theme: Dark' : 'Theme: Light'); }
   function apply(mode) {
-    document.documentElement.setAttribute('data-bs-theme', effectiveTheme(mode));
+    const eff = effectiveTheme(mode);
+    document.documentElement.setAttribute('data-bs-theme', eff);
     const btn = document.getElementById('themeMenuButton');
     if (btn) btn.textContent = label(mode);
+    if (typeof switchBaseLayer === 'function') switchBaseLayer(eff);
   }
   const stored = getStoredMode();
   apply(stored);
@@ -31,6 +33,7 @@ async function loadData() {
 })();
 
 // Helpers
+function cmp(a, b) { return a < b ? -1 : a > b ? 1 : 0; }
 function distanceNm(lat1, lon1, lat2, lon2) {
   const toRad = d => (d * Math.PI) / 180;
   const R_km = 6371.0088;
@@ -125,12 +128,136 @@ function setStatus(msg) {
   if (el) el.textContent = msg || '';
 }
 
+(function mapModule(){
+  let mapInstance = null;
+  let markerLayer = null;
+  let baseLight = null;
+  let baseDark = null;
+  const markerStyle = {
+    radius: 7,
+    fillColor: '#0d6efd',
+    color: '#ffffff',
+    weight: 2,
+    opacity: 0.9,
+    fillOpacity: 0.95,
+  };
+  const refMarkerStyle = {
+    radius: 8,
+    fillColor: '#dc3545',
+    color: '#ffffff',
+    weight: 2,
+    opacity: 0.95,
+    fillOpacity: 0.98,
+  };
+
+  function initMap() {
+    if (typeof L === 'undefined') return;
+    if (!mapInstance) {
+      // Continental US default view
+      mapInstance = L.map('map', { zoomControl: true }).setView([39.0, -98.0], 4);
+      baseLight = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+      });
+      baseDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors © CARTO'
+      });
+      const theme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+      (theme === 'dark' ? baseDark : baseLight).addTo(mapInstance);
+      markerLayer = L.layerGroup().addTo(mapInstance);
+      setTimeout(() => mapInstance && mapInstance.invalidateSize(), 0);
+    }
+  }
+
+  function fitTo(ref, pairs) {
+    if (!mapInstance || typeof L === 'undefined') return;
+    const bounds = [];
+    const rlat = ref.lat ?? ref.latitude;
+    const rlon = ref.lon ?? ref.longitude;
+    if (typeof rlat === 'number' && typeof rlon === 'number') bounds.push([rlat, rlon]);
+    for (const { a } of pairs) {
+      const lat = a.lat ?? a.latitude;
+      const lon = a.lon ?? a.longitude;
+      if (typeof lat === 'number' && typeof lon === 'number') bounds.push([lat, lon]);
+    }
+    if (bounds.length >= 2) {
+      mapInstance.fitBounds(bounds, { padding: [24, 24] });
+    } else if (bounds.length === 1) {
+      mapInstance.setView(bounds[0], 8);
+    }
+  }
+
+  function renderMap(ref, pairs) {
+    if (typeof L === 'undefined') {
+      const ms = document.getElementById('mapSummary');
+      if (ms) ms.textContent = 'Map library failed to load';
+      return;
+    }
+    initMap();
+    if (!mapInstance || !markerLayer) return;
+    markerLayer.clearLayers();
+
+    // Reference marker
+    if (ref) {
+      const rlat = ref.lat ?? ref.latitude;
+      const rlon = ref.lon ?? ref.longitude;
+      if (typeof rlat === 'number' && typeof rlon === 'number') {
+        const code = String(ref.icao || ref.code || '').toUpperCase();
+        const name = ref.name || '';
+        const m = L.circleMarker([rlat, rlon], refMarkerStyle).bindPopup(`<div class="fw-semibold">${code} <span class="text-secondary">${name}</span></div>`);
+        m.addTo(markerLayer);
+      }
+      const refEl = document.getElementById('mapRef');
+      if (refEl) {
+        const code = String(ref.icao || ref.code || '').toUpperCase();
+        refEl.textContent = `Reference: ${code}`;
+      }
+    }
+
+    // Nearest markers
+    for (const { a, d } of pairs) {
+      const lat = a.lat ?? a.latitude;
+      const lon = a.lon ?? a.longitude;
+      if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+      const code = (a.icao || a.code || '').toString().toUpperCase();
+      const name = a.name || '';
+      const html = `<div class="fw-semibold">${code} <span class="text-secondary">${name}</span></div><div class="small text-secondary">${d.toFixed(1)} NM</div>`;
+      const m = L.circleMarker([lat, lon], markerStyle).bindPopup(html, { maxWidth: 280 });
+      m.addTo(markerLayer);
+    }
+
+    const ms = document.getElementById('mapSummary');
+    if (ms) ms.textContent = `${pairs.length} nearest shown`;
+    if (ref) fitTo(ref, pairs);
+  }
+
+  // expose for theme switching and renderer
+  window.switchBaseLayer = function(theme) {
+    if (!mapInstance || !baseLight || !baseDark) return;
+    const wantDark = theme === 'dark';
+    if (wantDark) {
+      if (mapInstance.hasLayer(baseLight)) mapInstance.removeLayer(baseLight);
+      if (!mapInstance.hasLayer(baseDark)) baseDark.addTo(mapInstance);
+    } else {
+      if (mapInstance.hasLayer(baseDark)) mapInstance.removeLayer(baseDark);
+      if (!mapInstance.hasLayer(baseLight)) baseLight.addTo(mapInstance);
+    }
+  };
+
+  window._nearest_map = { initMap, renderMap };
+})();
+
 (async () => {
   let all = [];
   try {
     const data = await loadData();
     all = (data.airfields || []).map(a => ({ ...a }));
     setStatus(`${all.length} airfields loaded`);
+    // Initialize map once data is ready
+    if (window._nearest_map && typeof window._nearest_map.initMap === 'function') {
+      window._nearest_map.initMap();
+    }
   } catch (e) {
     setStatus(`Failed to load data: ${e}`);
     return;
@@ -148,8 +275,10 @@ function setStatus(msg) {
     setStatus(`Reference set: ${code}${name ? ' — ' + name : ''}`);
     const nearest = computeNearest(all, ref, 5);
     renderResults(nearest, ref);
+    if (window._nearest_map && typeof window._nearest_map.renderMap === 'function') {
+      window._nearest_map.renderMap(ref, nearest);
+    }
   }
   btn.addEventListener('click', run);
   input.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') run(); });
 })();
-
