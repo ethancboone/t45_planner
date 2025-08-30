@@ -258,17 +258,21 @@ function setStatus(msg) {
 
 (async () => {
   let all = [];
+  // Initialize map early so it appears even if data fetch fails (e.g., file:// CORS)
+  if (window._nearest_map && typeof window._nearest_map.initMap === 'function') {
+    window._nearest_map.initMap();
+  }
   try {
     const data = await loadData();
     all = (data.airfields || []).map(a => ({ ...a }));
     setStatus(`${all.length} airfields loaded`);
-    // Initialize map once data is ready
+    // Ensure map is initialized (no-op if already)
     if (window._nearest_map && typeof window._nearest_map.initMap === 'function') {
       window._nearest_map.initMap();
     }
   } catch (e) {
     setStatus(`Failed to load data: ${e}`);
-    return;
+    // Keep page usable even without data
   }
 
   const input = document.getElementById('destField');
@@ -290,70 +294,4 @@ function setStatus(msg) {
   btn.addEventListener('click', run);
   input.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') run(); });
 
-  // Testing functionality
-  function addTestResult(list, label, ok, details) {
-    const li = document.createElement('li');
-    li.className = 'list-group-item d-flex justify-content-between align-items-center';
-    const left = document.createElement('div');
-    left.textContent = label;
-    const right = document.createElement('div');
-    right.className = ok ? 'text-success' : 'text-danger';
-    right.textContent = ok ? 'PASS' : 'FAIL';
-    li.appendChild(left);
-    li.appendChild(right);
-    if (details) {
-      const small = document.createElement('div');
-      small.className = 'small text-secondary mt-1';
-      small.textContent = details;
-      li.appendChild(small);
-    }
-    list.appendChild(li);
-  }
-
-  async function runSelfTests() {
-    const ul = document.getElementById('testResults');
-    if (!ul) return;
-    ul.innerHTML = '';
-
-    // Test 1: Data loaded
-    addTestResult(ul, 'Dataset loaded', Array.isArray(all) && all.length > 0, `${all.length} records`);
-
-    // Test 2: Resolve reference (use input value or first entry)
-    let ref = null;
-    let refLabel = '';
-    const raw = (input.value || '').trim();
-    if (raw) {
-      ref = resolveRef(all, raw);
-      refLabel = raw.toUpperCase();
-    } else if (all.length) {
-      ref = all[0];
-      refLabel = String(ref.icao || ref.code || '').toUpperCase();
-    }
-    addTestResult(ul, 'Resolve reference', !!ref, ref ? `Using ${refLabel}` : 'No reference available');
-
-    // Test 3: Compute nearest
-    let nearest = [];
-    if (ref) {
-      nearest = computeNearest(all, ref, 5);
-    }
-    addTestResult(ul, 'Compute nearest', Array.isArray(nearest) && nearest.length >= 0, `${nearest.length} candidates`);
-
-    // Test 4: Leaflet presence (eventually)
-    const leafletReady = typeof window.L !== 'undefined';
-    addTestResult(ul, 'Leaflet loaded', leafletReady, leafletReady ? 'L available' : 'L undefined');
-
-    // Test 5: Map renders (container receives Leaflet classes)
-    if (ref) {
-      if (window._nearest_map && typeof window._nearest_map.renderMap === 'function') {
-        window._nearest_map.renderMap(ref, nearest);
-      }
-      await new Promise(r => setTimeout(r, 500));
-    }
-    const mapEl = document.getElementById('map');
-    const hasLeafletClass = mapEl && /leaflet-container/.test(mapEl.className);
-    addTestResult(ul, 'Map initialized', !!hasLeafletClass, hasLeafletClass ? 'Leaflet container present' : 'No Leaflet container');
-  }
-
-  const testBtn = document.getElementById('runTestsBtn');
-  if (testBtn) testBtn.addEventListener('click', runSelfTests);
 })();
