@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arresting Gear Airfields — Data</title>
+  <meta name="description" content="Browse and download the airfields dataset as JSON." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0d6efd" />
+  <link rel="icon" href="data:," />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Apply stored or preferred theme ASAP to avoid flash of wrong theme
+    (function() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const mode = stored || 'auto';
+        const effective = mode === 'dark' ? 'dark' : mode === 'light' ? 'light' : (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-bs-theme', effective);
+      } catch (_) {}
+    })();
+  </script>
+</head>
+<body class="bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body border-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-semibold text-decoration-none" href="index.html">✈️ Arresting Gear Airfields</a>
+      <ul class="navbar-nav flex-row gap-3 ms-3">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="planner.html">Planner</a></li>
+        <li class="nav-item"><a class="nav-link" href="nearest.html">Nearest</a></li>
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="data.html">Data</a></li>
+      </ul>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <div class="dropdown">
+          <button id="themeMenuButton" class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Theme</button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeMenuButton">
+            <li><button class="dropdown-item theme-option" data-theme="light" type="button">Light</button></li>
+            <li><button class="dropdown-item theme-option" data-theme="dark" type="button">Dark</button></li>
+            <li><button class="dropdown-item theme-option" data-theme="auto" type="button">Auto (System)</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <header class="mb-3">
+      <h1 class="h4 mb-1">Dataset</h1>
+      <p class="text-secondary mb-0">Browse a summary, or download the raw JSON for your own use.</p>
+    </header>
+
+    <section class="mb-3">
+      <div class="card shadow-sm">
+        <div class="card-body d-flex flex-wrap gap-2 align-items-center">
+          <a href="data/airfields.json" class="btn btn-primary">View Raw JSON</a>
+          <a href="data/airfields.json" download class="btn btn-outline-primary">Download Raw JSON</a>
+          <div class="ms-auto small text-secondary">
+            <span id="metaCount">—</span> airfields • Last updated <span id="metaDate">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="fw-semibold mb-2">Quick Peek</div>
+          <pre id="preview" class="small bg-body-secondary p-2 rounded" style="max-height: 40vh; overflow: auto; white-space: pre-wrap;"></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer container py-4">
+    <div class="small text-center">Built for quick planning and exploration • T-45</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    (function() {
+      const THEME_KEY = 'theme';
+      function setStoredMode(mode) { try { localStorage.setItem(THEME_KEY, mode); } catch (_) {} }
+      function effectiveTheme(mode) {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (mode === 'dark' || mode === 'light') return mode;
+        return prefersDark ? 'dark' : 'light';
+      }
+      function label(mode) { return mode === 'auto' ? 'Theme: Auto' : (mode === 'dark' ? 'Theme: Dark' : 'Theme: Light'); }
+      function apply(mode) {
+        document.documentElement.setAttribute('data-bs-theme', effectiveTheme(mode));
+        const btn = document.getElementById('themeMenuButton');
+        if (btn) btn.textContent = label(mode);
+      }
+      const stored = (function(){ try { return localStorage.getItem(THEME_KEY) || 'auto'; } catch (_) { return 'auto'; } })();
+      apply(stored);
+      document.querySelectorAll('.theme-option').forEach(el => el.addEventListener('click', () => {
+        const m = el.getAttribute('data-theme');
+        if (m) { setStoredMode(m); apply(m); }
+      }));
+    })();
+  </script>
+  <script>
+    // Load and summarize dataset; also provide a small preview
+    (async function() {
+      const elCount = document.getElementById('metaCount');
+      const elDate = document.getElementById('metaDate');
+      const preview = document.getElementById('preview');
+      function fmtDate(d) { try { return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' }); } catch (_) { return d.toISOString().slice(0,10); } }
+      try {
+        const res = await fetch('data/airfields.json', { cache: 'no-store' });
+        const txt = await res.text();
+        // Show a truncated snippet rather than parsing full JSON for large files
+        preview.textContent = txt.slice(0, 4000) + (txt.length > 4000 ? '\n…' : '');
+        try {
+          const data = JSON.parse(txt);
+          const list = Array.isArray(data.airfields) ? data.airfields : [];
+          elCount.textContent = list.length.toLocaleString();
+        } catch (_) {}
+        const lm = res.headers.get('last-modified');
+        if (lm) elDate.textContent = fmtDate(new Date(lm)); else elDate.textContent = 'recently';
+      } catch (e) {
+        preview.textContent = 'Failed to load dataset: ' + e;
+      }
+    })();
+  </script>
+</body>
+</html>
+
