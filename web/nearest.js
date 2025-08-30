@@ -131,6 +131,7 @@ function setStatus(msg) {
 (function mapModule(){
   let mapInstance = null;
   let markerLayer = null;
+  let lineLayer = null;
   let baseLight = null;
   let baseDark = null;
   let initTries = 0;
@@ -150,6 +151,11 @@ function setStatus(msg) {
     weight: 2,
     opacity: 0.95,
     fillOpacity: 0.98,
+  };
+  const lineStyle = {
+    color: '#0d6efd',
+    weight: 2,
+    opacity: 0.6,
   };
 
   function initMap() {
@@ -172,6 +178,8 @@ function setStatus(msg) {
       });
       const theme = document.documentElement.getAttribute('data-bs-theme') || 'light';
       (theme === 'dark' ? baseDark : baseLight).addTo(mapInstance);
+      // Draw lines below markers
+      lineLayer = L.layerGroup().addTo(mapInstance);
       markerLayer = L.layerGroup().addTo(mapInstance);
       setTimeout(() => mapInstance && mapInstance.invalidateSize(), 0);
     }
@@ -205,6 +213,7 @@ function setStatus(msg) {
     initMap();
     if (!mapInstance || !markerLayer) return;
     markerLayer.clearLayers();
+    if (lineLayer) lineLayer.clearLayers();
 
     // Reference marker
     if (ref) {
@@ -223,7 +232,7 @@ function setStatus(msg) {
       }
     }
 
-    // Nearest markers
+    // Nearest markers and connecting lines
     for (const { a, d } of pairs) {
       const lat = a.lat ?? a.latitude;
       const lon = a.lon ?? a.longitude;
@@ -233,6 +242,18 @@ function setStatus(msg) {
       const html = `<div class="fw-semibold">${code} <span class="text-secondary">${name}</span></div><div class="small text-secondary">${d.toFixed(1)} NM</div>`;
       const m = L.circleMarker([lat, lon], markerStyle).bindPopup(html, { maxWidth: 280 });
       m.addTo(markerLayer);
+      // Draw connection from reference to this airfield
+      if (ref && lineLayer) {
+        const rlat = ref.lat ?? ref.latitude;
+        const rlon = ref.lon ?? ref.longitude;
+        if (typeof rlat === 'number' && typeof rlon === 'number') {
+          const pl = L.polyline([[rlat, rlon], [lat, lon]], lineStyle);
+          pl.bindTooltip(`${d.toFixed(1)} NM`, { sticky: true });
+          pl.on('mouseover', () => pl.setStyle({ weight: 4, opacity: 0.85 }));
+          pl.on('mouseout', () => pl.setStyle({ weight: lineStyle.weight, opacity: lineStyle.opacity }));
+          pl.addTo(lineLayer);
+        }
+      }
     }
 
     const ms = document.getElementById('mapSummary');
