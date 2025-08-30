@@ -198,6 +198,8 @@ function updateSummary(total, shown) {
 function getFilters() {
   const minLength = parseInt(document.getElementById('minLength').value, 10);
   const minWidth = parseInt(document.getElementById('minWidth').value, 10);
+  const refField = (document.getElementById('refField')?.value || '').trim().toUpperCase();
+  const maxDistance = parseFloat(document.getElementById('maxDistance')?.value);
   const checked = Array.from(document.querySelectorAll('.gearType:checked')).map(cb => cb.value.toUpperCase());
   // Expand allowed set to include HOOK/base synonyms so 'E-28' also matches 'HOOK E-28'
   const allowed = new Set();
@@ -209,16 +211,57 @@ function getFilters() {
   return {
     minLength: isNaN(minLength) ? null : minLength,
     minWidth: isNaN(minWidth) ? null : minWidth,
+    refField: refField || null,
+    maxDistance: isNaN(maxDistance) ? null : maxDistance,
     allowed,
   };
 }
 
+// Haversine distance (nautical miles)
+function distanceNm(lat1, lon1, lat2, lon2) {
+  const toRad = d => (d * Math.PI) / 180;
+  const R_km = 6371.0088;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const km = R_km * c;
+  return km * 0.539957; // km -> NM
+}
+
+function resolveRef(all, code) {
+  if (!code) return null;
+  const c = code.toUpperCase();
+  const candidates = all.filter(a => {
+    const icao = String(a.icao || a.code || '').toUpperCase();
+    const faa = String(a.code || '').toUpperCase();
+    // match exact ICAO or FAA code, allow 'K' prefix flexibility
+    return (
+      icao === c || faa === c ||
+      (c.length === 3 && icao === `K${c}`) ||
+      (c.length === 4 && c.startsWith('K') && faa === c.slice(1))
+    );
+  });
+  return candidates[0] || null;
+}
+
 function applyFilters(all) {
-  const { minLength, minWidth, allowed } = getFilters();
-  return all.filter(a =>
-    passesRunwayFilter(a.runways || [], minLength, minWidth) &&
-    passesGearTypeFilter(a.gear || [], allowed)
-  );
+  const { minLength, minWidth, allowed, refField, maxDistance } = getFilters();
+  const ref = refField && maxDistance ? resolveRef(all, refField) : null;
+  const refLat = ref?.lat ?? ref?.latitude;
+  const refLon = ref?.lon ?? ref?.longitude;
+  const haveRef = typeof refLat === 'number' && typeof refLon === 'number' && typeof maxDistance === 'number';
+  return all.filter(a => {
+    const runwayOk = passesRunwayFilter(a.runways || [], minLength, minWidth);
+    const gearOk = passesGearTypeFilter(a.gear || [], allowed);
+    if (!runwayOk || !gearOk) return false;
+    if (!haveRef) return true;
+    const lat = a.lat ?? a.latitude;
+    const lon = a.lon ?? a.longitude;
+    if (typeof lat !== 'number' || typeof lon !== 'number') return false;
+    const d = distanceNm(refLat, refLon, lat, lon);
+    return d <= maxDistance;
+  });
 }
 
 function currentSort() {
@@ -345,6 +388,8 @@ function wireUI(all) {
   const inputs = [
     document.getElementById('minLength'),
     document.getElementById('minWidth'),
+    document.getElementById('refField'),
+    document.getElementById('maxDistance'),
     ...Array.from(document.querySelectorAll('.gearType')),
   ];
   const onChange = () => {
@@ -363,6 +408,10 @@ function wireUI(all) {
   document.getElementById('resetBtn').addEventListener('click', () => {
     document.getElementById('minLength').value = '';
     document.getElementById('minWidth').value = '';
+    const rf = document.getElementById('refField');
+    const md = document.getElementById('maxDistance');
+    if (rf) rf.value = '';
+    if (md) md.value = '';
     document.querySelectorAll('.gearType').forEach(cb => cb.checked = true);
     onChange();
   });

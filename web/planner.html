@@ -66,14 +66,23 @@
           </div>
           <div id="filtersCollapse" class="collapse show">
           <div class="card-body">
-            <div class="row g-3 align-items-end">
-              <div class="col-sm-6 col-md-3">
+            <div class="row g-3">
+              <div class="col-12">
                 <label for="minLength" class="form-label">Min Runway Length (ft)</label>
                 <input type="number" id="minLength" min="0" placeholder="0" class="form-control" />
               </div>
-              <div class="col-sm-6 col-md-3">
+              <div class="col-12">
                 <label for="minWidth" class="form-label">Min Runway Width (ft)</label>
                 <input type="number" id="minWidth" min="0" placeholder="0" class="form-control" />
+              </div>
+              <div class="col-12">
+                <label for="refField" class="form-label">Reference Field (ICAO/FAA)</label>
+                <input type="text" id="refField" inputmode="latin" autocapitalize="characters" placeholder="e.g., KMEI or MEI" class="form-control" />
+              </div>
+              <div class="col-12">
+                <label for="maxDistance" class="form-label">Max Distance (NM)</label>
+                <input type="number" id="maxDistance" min="0" placeholder="e.g., 150" class="form-control" />
+                <div class="form-text">Filters airfields within this radius of the reference field.</div>
               </div>
               <div class="col-12">
                 <div class="row g-2">
