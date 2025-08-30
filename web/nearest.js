@@ -136,6 +136,8 @@ function setStatus(msg) {
   let baseDark = null;
   let initTries = 0;
   const MAX_INIT_TRIES = 40; // ~8s if interval 200ms
+  let lastRef = null;
+  let lastPairs = [];
   const markerStyle = {
     radius: 7,
     fillColor: '#0d6efd',
@@ -181,7 +183,12 @@ function setStatus(msg) {
       // Draw lines below markers
       lineLayer = L.layerGroup().addTo(mapInstance);
       markerLayer = L.layerGroup().addTo(mapInstance);
-      setTimeout(() => mapInstance && mapInstance.invalidateSize(), 0);
+      setTimeout(() => {
+        if (mapInstance) {
+          mapInstance.invalidateSize();
+          if (lastRef) renderMap(lastRef, lastPairs);
+        }
+      }, 0);
     }
   }
 
@@ -204,6 +211,8 @@ function setStatus(msg) {
   }
 
   function renderMap(ref, pairs) {
+    lastRef = ref;
+    lastPairs = pairs || [];
     if (typeof L === 'undefined') {
       const ms = document.getElementById('mapSummary');
       if (ms) ms.textContent = 'Map library not ready';
