@@ -67,6 +67,9 @@ function normType(t) {
   return String(t || '').toUpperCase();
 }
 
+// Keep a reference to the loaded airfields for helpers like suggestions
+let AIRFIELDS = [];
+
 function unique(arr) {
   return Array.from(new Set(arr));
 }
@@ -323,7 +326,11 @@ function updateDistanceHelpUI(ref, maxDistance) {
     return;
   }
   if (!ref) {
-    help.textContent = `Reference “${rf}” not found in dataset.`;
+    // Suggest the closest few codes by prefix/name match to aid discovery
+    const sug = suggestRefs(rf, 5).map(s => s.show).join(', ');
+    help.textContent = sug
+      ? `Reference “${rf}” not found. Try: ${sug}`
+      : `Reference “${rf}” not found in dataset.`;
     return;
   }
   const name = ref.name || '';
@@ -456,6 +463,7 @@ function renderMarkers(data) {
 }
 
 function wireUI(all) {
+  AIRFIELDS = all;
   const inputs = [
     document.getElementById('minLength'),
     document.getElementById('minWidth'),
@@ -524,6 +532,58 @@ function wireUI(all) {
   onChange();
 }
 
+// --- Reference field autocomplete and suggestions -------------------------
+
+function populateRefDatalist(all) {
+  const dl = document.getElementById('refFieldList');
+  if (!dl) return;
+  dl.innerHTML = '';
+  const seen = new Set();
+  for (const a of all) {
+    const icao = String(a.icao || '').toUpperCase();
+    const faa = String(a.code || '').toUpperCase();
+    const name = a.name || '';
+    const city = a.city || '';
+    const state = String(a.state_code || a.state || '').toUpperCase();
+    const label = [icao || faa, name, city || null, state || null].filter(Boolean).join(' — ');
+    if (icao && !seen.has(icao)) {
+      const opt = document.createElement('option');
+      opt.value = icao;
+      opt.label = label;
+      dl.appendChild(opt);
+      seen.add(icao);
+    }
+    if (faa && !seen.has(faa)) {
+      const opt2 = document.createElement('option');
+      opt2.value = faa;
+      opt2.label = label;
+      dl.appendChild(opt2);
+      seen.add(faa);
+    }
+  }
+}
+
+function suggestRefs(query, limit = 5) {
+  const q = String(query || '').toUpperCase();
+  if (!q || !AIRFIELDS.length) return [];
+  const scored = AIRFIELDS.map(a => {
+    const icao = String(a.icao || '').toUpperCase();
+    const faa = String(a.code || '').toUpperCase();
+    const name = String(a.name || '').toUpperCase();
+    let score = 0;
+    if (icao === q || faa === q) score = 100;
+    else if (icao.startsWith(q) || faa.startsWith(q)) score = 80;
+    else if (name.includes(q)) score = 40;
+    return { a, score };
+  }).filter(x => x.score > 0);
+  scored.sort((x, y) => y.score - x.score || cmp(String(x.a.icao||x.a.code||''), String(y.a.icao||y.a.code||'')));
+  return scored.slice(0, limit).map(({ a }) => {
+    const code = String(a.icao || a.code || '').toUpperCase();
+    const nm = a.name || '';
+    return { code, show: `${code}${nm ? ' — ' + nm : ''}` };
+  });
+}
+
 (async () => {
   try {
     // Theme init and menu wiring
@@ -531,6 +591,7 @@ function wireUI(all) {
 
     const data = await loadData();
     const all = (data.airfields || []).map(a => ({ ...a }));
+    populateRefDatalist(all);
     wireUI(all);
   } catch (e) {
     const list = document.getElementById('list');

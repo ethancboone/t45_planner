@@ -44,6 +44,13 @@ body { background: var(--bs-body-bg); }
 }
 
 /* (tabs remain non-sticky by default) */
+/* Navbar subtle elevation for a more polished look */
+.navbar { box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+
+/* Form controls: clearer focus ring */
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .15);
+}
 
 /* Summary pill */
 #summary {
@@ -68,6 +75,14 @@ body { background: var(--bs-body-bg); }
 /* Map height and rounding */
 #map { height: 70vh; border-radius: .75rem; }
 
+/* Improve tab spacing and alignment */
+.nav-tabs { gap: .25rem; }
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  color: var(--bs-body-color);
+}
+.nav-tabs .nav-link:hover { background: var(--bs-tertiary-bg); }
+
 /* (no special map-mode spacing) */
 
 /* (METAR legend removed) */
@@ -76,6 +91,9 @@ body { background: var(--bs-body-bg); }
 .app-footer {
   color: var(--bs-secondary-color);
 }
+
+/* Cleaner footer spacing */
+.app-footer .small { opacity: .9; }
 
 /* Group headers in state-grouped list */
 .row-break { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; }

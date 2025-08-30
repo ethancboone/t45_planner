@@ -83,7 +83,8 @@
               </div>
               <div class="col-12">
                 <label for="refField" class="form-label">Reference Field (ICAO/FAA)</label>
-                <input type="text" id="refField" inputmode="latin" autocapitalize="characters" placeholder="e.g., KMEI or MEI" class="form-control" />
+                <input type="text" id="refField" inputmode="latin" autocapitalize="characters" placeholder="Start typing code… e.g., KNMM or NMM" class="form-control" list="refFieldList" />
+                <datalist id="refFieldList"></datalist>
               </div>
               <div class="col-12">
                 <label for="maxDistance" class="form-label">Max Distance (NM)</label>
