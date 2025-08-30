@@ -71,6 +71,37 @@ function unique(arr) {
   return Array.from(new Set(arr));
 }
 
+function normRw(s) {
+  const m = String(s || '').toUpperCase().match(/^0*([0-9]{1,2})([LCR])?$/);
+  if (!m) return String(s || '').toUpperCase();
+  return m[1] + (m[2] || '');
+}
+
+function buildRunwayGearIndex(a) {
+  const map = new Map();
+  const add = (k, type) => {
+    if (!k) return;
+    const key = normRw(k);
+    if (!map.has(key)) map.set(key, new Set());
+    map.get(key).add(normType(type));
+  };
+  const gear = a.gear || [];
+  for (const g of gear) {
+    const type = g.type;
+    const raw = String(g.raw || '');
+    const re = /(RWY|RUNWAY)\s*([0-9]{1,2}[LCR]?)(?:\s*[\/-]\s*([0-9]{1,2}[LCR]?))?/gi;
+    let m;
+    let found = false;
+    while ((m = re.exec(raw))) {
+      found = true;
+      add(m[2], type);
+      if (m[3]) add(m[3], type);
+    }
+    // If no explicit runway referenced, leave it unassigned; shown only at airfield level
+  }
+  return map;
+}
+
 function passesRunwayFilter(runways, minLen, minWid) {
   if (!minLen && !minWid) return true;
   return runways.some(r => {
@@ -118,7 +149,17 @@ function createCardNode(a) {
     body.appendChild(locEl);
   }
 
-  const rws = (a.runways || []).map(r => `${r.designator || ''} ${r.length_ft || '?'}×${r.width_ft || '?'} ft`).slice(0, 6);
+  const rwGear = buildRunwayGearIndex(a);
+  const rws = (a.runways || []).map(r => {
+    const d = (r.designator || '').toString();
+    const key = normRw(d);
+    const types = rwGear.get(key);
+    const dim = `${r.length_ft || '?'}×${r.width_ft || '?'} ft`;
+    if (types && types.size) {
+      return `${d} ${dim} • Gear: ${Array.from(types).join(', ')}`;
+    }
+    return `${d} ${dim}`;
+  }).slice(0, 6);
   const rwRow = document.createElement('div');
   rwRow.className = 'd-flex flex-wrap gap-2';
   if (rws.length) {
@@ -251,6 +292,7 @@ function applyFilters(all) {
   const refLat = ref?.lat ?? ref?.latitude;
   const refLon = ref?.lon ?? ref?.longitude;
   const haveRef = typeof refLat === 'number' && typeof refLon === 'number' && typeof maxDistance === 'number';
+  updateDistanceHelpUI(ref, maxDistance);
   return all.filter(a => {
     const runwayOk = passesRunwayFilter(a.runways || [], minLength, minWidth);
     const gearOk = passesGearTypeFilter(a.gear || [], allowed);
@@ -262,6 +304,35 @@ function applyFilters(all) {
     const d = distanceNm(refLat, refLon, lat, lon);
     return d <= maxDistance;
   });
+}
+
+function updateDistanceHelpUI(ref, maxDistance) {
+  const help = document.getElementById('distanceHelp');
+  if (!help) return;
+  const rf = (document.getElementById('refField')?.value || '').trim().toUpperCase();
+  if (!rf && !document.getElementById('maxDistance')?.value) {
+    help.textContent = 'Filters airfields within this radius of the reference field.';
+    return;
+  }
+  if (!rf) {
+    help.textContent = 'Enter a reference ICAO/FAA code to enable distance filtering.';
+    return;
+  }
+  if (!document.getElementById('maxDistance')?.value) {
+    help.textContent = 'Enter a maximum distance in NM to enable distance filtering.';
+    return;
+  }
+  if (!ref) {
+    help.textContent = `Reference “${rf}” not found in dataset.`;
+    return;
+  }
+  const name = ref.name || '';
+  const code = String(ref.icao || ref.code || '').toUpperCase();
+  if (typeof maxDistance === 'number') {
+    help.textContent = `Reference set: ${code}${name ? ' — ' + name : ''}. Showing fields within ${maxDistance} NM.`;
+  } else {
+    help.textContent = `Reference set: ${code}${name ? ' — ' + name : ''}.`;
+  }
 }
 
 function currentSort() {
