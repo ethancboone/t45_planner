@@ -33,12 +33,12 @@ jobs:
           # ensure lxml, requests, etc., are installed
           pip install lxml requests
 
-      # - name: Build JSON dataset
-      #   run: |
-      #     python find_arresting_gear_airfields.py \
-      #       --root nasr_data/latest/aixm51/xml \
-      #       --format json \
-      #       --out web/data/airfields.json
+      - name: Build JSON dataset
+        run: |
+          python find_arresting_gear_airfields.py \
+            --root nasr_data/latest/aixm51/xml \
+            --format json \
+            --out web/data/airfields.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

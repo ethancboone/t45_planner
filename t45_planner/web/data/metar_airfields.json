@@ -1,0 +1,1098 @@
+{
+  "count": 156,
+  "airfields": [
+    {
+      "airport_id": "AH_0000034",
+      "code": "EDF",
+      "icao": "PAED",
+      "name": "ELMENDORF AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0000149",
+      "code": "CDV",
+      "icao": "PACV",
+      "name": "MERLE K (MUDHOLE) SMITH",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0000215",
+      "code": "EIL",
+      "icao": "PAEI",
+      "name": "EIELSON AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0000340",
+      "code": "AKN",
+      "icao": "PAKN",
+      "name": "KING SALMON",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0000430",
+      "code": "OME",
+      "icao": "PAOM",
+      "name": "NOME",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0000549",
+      "code": "SYA",
+      "icao": "PASY",
+      "name": "EARECKSON AS",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001008",
+      "code": "MXF",
+      "icao": "KMXF",
+      "name": "MAXWELL AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001013",
+      "code": "MGM",
+      "icao": "KMGM",
+      "name": "MONTGOMERY RGNL (DANNELLY FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001235",
+      "code": "FSM",
+      "icao": "KFSM",
+      "name": "FORT SMITH RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001307",
+      "code": "LIT",
+      "icao": "KLIT",
+      "name": "BILL AND HILLARY CLINTON NTL/ADAMS FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001512",
+      "code": "GXF",
+      "icao": "KGXF",
+      "name": "GILA BEND AF AUX",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001517",
+      "code": "LUF",
+      "icao": "KLUF",
+      "name": "LUKE AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001719",
+      "code": "TUS",
+      "icao": "KTUS",
+      "name": "TUCSON INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001720",
+      "code": "DMA",
+      "icao": "KDMA",
+      "name": "DAVIS MONTHAN AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001751",
+      "code": "NYL",
+      "icao": "KNYL",
+      "name": "YUMA MCAS/YUMA INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001782",
+      "code": "ACV",
+      "icao": "KACV",
+      "name": "CALIFORNIA REDWOOD COAST-HUMBOLDT COUNTY",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001838",
+      "code": "BUR",
+      "icao": "KBUR",
+      "name": "BOB HOPE",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001884",
+      "code": "NID",
+      "icao": "KNID",
+      "name": "CHINA LAKE NAWS (ARMITAGE FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001954",
+      "code": "EDW",
+      "icao": "KEDW",
+      "name": "EDWARDS AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0001956",
+      "code": "NJK",
+      "icao": "KNJK",
+      "name": "EL CENTRO NAF (VRACIU FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002005",
+      "code": "FAT",
+      "icao": "KFAT",
+      "name": "FRESNO YOSEMITE INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002122",
+      "code": "NLC",
+      "icao": "KNLC",
+      "name": "LEMOORE NAS (REEVES FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002257",
+      "code": "MRY",
+      "icao": "KMRY",
+      "name": "MONTEREY RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002282",
+      "code": "OAK",
+      "icao": "KOAK",
+      "name": "OAKLAND INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002342",
+      "code": "NTD",
+      "icao": "KNTD",
+      "name": "POINT MUGU NAS (NAVAL BASE VENTURA CO)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002382",
+      "code": "RIV",
+      "icao": "KRIV",
+      "name": "MARCH ARB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002429",
+      "code": "SAN",
+      "icao": "KSAN",
+      "name": "SAN DIEGO INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002430",
+      "code": "NKX",
+      "icao": "KNKX",
+      "name": "MIRAMAR MCAS (JOE FOSS FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002432",
+      "code": "NZY",
+      "icao": "KNZY",
+      "name": "NORTH ISLAND NAS (HALSEY FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002443",
+      "code": "SFO",
+      "icao": "KSFO",
+      "name": "SAN FRANCISCO INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002452",
+      "code": "SBP",
+      "icao": "KSBP",
+      "name": "SAN LUIS OBISPO COUNTY RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002566",
+      "code": "NXP",
+      "icao": "KNXP",
+      "name": "TWENTYNINE PALMS SELF",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0002647",
+      "code": "BKF",
+      "icao": "KBKF",
+      "name": "BUCKLEY SPACE FORCE BASE",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003035",
+      "code": "TEX",
+      "icao": "KTEX",
+      "name": "TELLURIDE RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003129",
+      "code": "GON",
+      "icao": "KGON",
+      "name": "GROTON-NEW LONDON",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003201",
+      "code": "DCA",
+      "icao": "KDCA",
+      "name": "RONALD REAGAN WASHINGTON NTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003247",
+      "code": "ILG",
+      "icao": "KILG",
+      "name": "NEW CASTLE",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003283",
+      "code": "AGR",
+      "icao": "KAGR",
+      "name": "MACDILL AFB AUX FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003309",
+      "code": "BCT",
+      "icao": "KBCT",
+      "name": "BOCA RATON",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003462",
+      "code": "FLL",
+      "icao": "KFLL",
+      "name": "FORT LAUDERDALE/HOLLYWOOD INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003558",
+      "code": "HST",
+      "icao": "KHST",
+      "name": "HOMESTEAD ARB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003586",
+      "code": "JAX",
+      "icao": "KJAX",
+      "name": "JACKSONVILLE INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003598",
+      "code": "NIP",
+      "icao": "KNIP",
+      "name": "JACKSONVILLE NAS (TOWERS FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003631",
+      "code": "EYW",
+      "icao": "KEYW",
+      "name": "KEY WEST INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003633",
+      "code": "NQX",
+      "icao": "KNQX",
+      "name": "KEY WEST NAS (BOCA CHICA FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003748",
+      "code": "NRB",
+      "icao": "KNRB",
+      "name": "MAYPORT NS (ADM DAVID L MCDONALD FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003910",
+      "code": "ORL",
+      "icao": "KORL",
+      "name": "ORLANDO EXEC",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003952",
+      "code": "PAM",
+      "icao": "KPAM",
+      "name": "TYNDALL AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0003973",
+      "code": "NPA",
+      "icao": "KNPA",
+      "name": "PENSACOLA NAS (FORREST SHERMAN FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004067",
+      "code": "SUA",
+      "icao": "KSUA",
+      "name": "WITHAM FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004099",
+      "code": "MCF",
+      "icao": "KMCF",
+      "name": "MACDILL AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004127",
+      "code": "VPS",
+      "icao": "KVPS",
+      "name": "EGLIN AFB/DESTIN-FT WALTON BEACH",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004129",
+      "code": "EGI",
+      "icao": "KEGI",
+      "name": "DUKE FLD,(EGLIN AF AUX NR 3)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004154",
+      "code": "PBI",
+      "icao": "KPBI",
+      "name": "PALM BEACH INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004557",
+      "code": "SAV",
+      "icao": "KSAV",
+      "name": "SAVANNAH/HILTON HEAD INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004622",
+      "code": "VAD",
+      "icao": "KVAD",
+      "name": "MOODY AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004633",
+      "code": "WRB",
+      "icao": "KWRB",
+      "name": "ROBINS AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004665",
+      "code": "UAM",
+      "icao": "PGUA",
+      "name": "ANDERSEN AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004675",
+      "code": "HNL",
+      "icao": "PHNL",
+      "name": "DANIEL K INOUYE INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004687",
+      "code": "NGF",
+      "icao": "PHNG",
+      "name": "KANEOHE BAY MCAS (MARION E CARL FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004693",
+      "code": "BKH",
+      "icao": "PHBK",
+      "name": "BARKING SANDS PMRF",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0004960",
+      "code": "SUX",
+      "icao": "KSUX",
+      "name": "SIOUX GATEWAY/BRIG GENERAL BUD DAY FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0005223",
+      "code": "MUO",
+      "icao": "KMUO",
+      "name": "MOUNTAIN HOME AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0005438",
+      "code": "MDW",
+      "icao": "KMDW",
+      "name": "CHICAGO MIDWAY INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0005439",
+      "code": "ORD",
+      "icao": "KORD",
+      "name": "CHICAGO O'HARE INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0005440",
+      "code": "PWK",
+      "icao": "KPWK",
+      "name": "CHICAGO EXEC",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0006114",
+      "code": "FWA",
+      "icao": "KFWA",
+      "name": "FORT WAYNE INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007000",
+      "code": "LEX",
+      "icao": "KLEX",
+      "name": "BLUE GRASS",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007201",
+      "code": "BAD",
+      "icao": "KBAD",
+      "name": "BARKSDALE AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007370",
+      "code": "LFT",
+      "icao": "KLFT",
+      "name": "LAFAYETTE RGNL/PAUL FOURNET FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007457",
+      "code": "NBG",
+      "icao": "KNBG",
+      "name": "NEW ORLEANS NAS JRB (ALVIN CALLENDER FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007605",
+      "code": "BOS",
+      "icao": "KBOS",
+      "name": "GENERAL EDWARD LAWRENCE LOGAN INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007662",
+      "code": "HYA",
+      "icao": "KHYA",
+      "name": "CAPE COD GATEWAY",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007767",
+      "code": "BAF",
+      "icao": "KBAF",
+      "name": "WESTFIELD-BARNES RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007823",
+      "code": "ADW",
+      "icao": "KADW",
+      "name": "JOINT BASE ANDREWS",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0007947",
+      "code": "NHK",
+      "icao": "KNHK",
+      "name": "PATUXENT RIVER NAS (TRAPNELL FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0008009",
+      "code": "AUG",
+      "icao": "KAUG",
+      "name": "AUGUSTA STATE",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0008246",
+      "code": "APN",
+      "icao": "KAPN",
+      "name": "ALPENA COUNTY RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0008844",
+      "code": "DLH",
+      "icao": "KDLH",
+      "name": "DULUTH INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009012",
+      "code": "MSP",
+      "icao": "KMSP",
+      "name": "MINNEAPOLIS-ST PAUL INTL/WOLD-CHAMBERLAIN",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009121",
+      "code": "STP",
+      "icao": "KSTP",
+      "name": "ST PAUL DOWNTOWN HOLMAN FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009422",
+      "code": "MKC",
+      "icao": "KMKC",
+      "name": "KANSAS CITY DOWNTOWN/WHEELER FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009618",
+      "code": "STL",
+      "icao": "KSTL",
+      "name": "ST LOUIS LAMBERT INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009784",
+      "code": "CBM",
+      "icao": "KCBM",
+      "name": "COLUMBUS AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009813",
+      "code": "GPT",
+      "icao": "KGPT",
+      "name": "GULFPORT-BILOXI INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009871",
+      "code": "NMM",
+      "icao": "KNMM",
+      "name": "MERIDIAN NAS (MC CAIN FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0009872",
+      "code": "NJW",
+      "icao": "KNJW",
+      "name": "JOE WILLIAMS NOLF",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0010378",
+      "code": "CLT",
+      "icao": "KCLT",
+      "name": "CHARLOTTE/DOUGLAS INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0010383",
+      "code": "NKT",
+      "icao": "KNKT",
+      "name": "CHERRY POINT MCAS (CUNNINGHAM FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0010472",
+      "code": "GSB",
+      "icao": "KGSB",
+      "name": "SEYMOUR JOHNSON AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0010630",
+      "code": "EWN",
+      "icao": "KEWN",
+      "name": "COASTAL CAROLINA RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0010747",
+      "code": "NJM",
+      "icao": "KNJM",
+      "name": "BOGUE FLD MCALF",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0010800",
+      "code": "INT",
+      "icao": "KINT",
+      "name": "SMITH REYNOLDS",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011422",
+      "code": "MHT",
+      "icao": "KMHT",
+      "name": "MANCHESTER BOSTON RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011517",
+      "code": "ACY",
+      "icao": "KACY",
+      "name": "ATLANTIC CITY INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011678",
+      "code": "EWR",
+      "icao": "KEWR",
+      "name": "NEWARK LIBERTY INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011747",
+      "code": "TEB",
+      "icao": "KTEB",
+      "name": "TETERBORO",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011758",
+      "code": "TTN",
+      "icao": "KTTN",
+      "name": "TRENTON MERCER",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011791",
+      "code": "HMN",
+      "icao": "KHMN",
+      "name": "HOLLOMAN AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0011798",
+      "code": "ABQ",
+      "icao": "KABQ",
+      "name": "ALBUQUERQUE INTL SUNPORT",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012001",
+      "code": "NFL",
+      "icao": "KNFL",
+      "name": "FALLON NAS (VAN VOORHIS FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012023",
+      "code": "INS",
+      "icao": "KINS",
+      "name": "CREECH AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012027",
+      "code": "LSV",
+      "icao": "KLSV",
+      "name": "NELLIS AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012104",
+      "code": "TNX",
+      "icao": "KTNX",
+      "name": "TONOPAH TEST RANGE",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012164",
+      "code": "BGM",
+      "icao": "KBGM",
+      "name": "GREATER BINGHAMTON/EDWIN A LINK FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012253",
+      "code": "ELM",
+      "icao": "KELM",
+      "name": "ELMIRA/CORNING RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012266",
+      "code": "FRG",
+      "icao": "KFRG",
+      "name": "REPUBLIC",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012432",
+      "code": "JFK",
+      "icao": "KJFK",
+      "name": "JOHN F KENNEDY INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012433",
+      "code": "LGA",
+      "icao": "KLGA",
+      "name": "LAGUARDIA",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012511",
+      "code": "ROC",
+      "icao": "KROC",
+      "name": "FREDERICK DOUGLASS/GREATER ROCHESTER INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012767",
+      "code": "CLE",
+      "icao": "KCLE",
+      "name": "CLEVELAND-HOPKINS INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0012829",
+      "code": "FFO",
+      "icao": "KFFO",
+      "name": "WRIGHT-PATTERSON AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0013166",
+      "code": "TOL",
+      "icao": "KTOL",
+      "name": "EUGENE F KRANZ TOLEDO EXPRESS",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0013405",
+      "code": "END",
+      "icao": "KEND",
+      "name": "VANCE AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0013699",
+      "code": "TUL",
+      "icao": "KTUL",
+      "name": "TULSA INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0013940",
+      "code": "LMT",
+      "icao": "KLMT",
+      "name": "CRATER LAKE/KLAMATH RGNL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014040",
+      "code": "PDX",
+      "icao": "KPDX",
+      "name": "PORTLAND INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014177",
+      "code": "ABE",
+      "icao": "KABE",
+      "name": "LEHIGH VALLEY INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014702",
+      "code": "RDG",
+      "icao": "KRDG",
+      "name": "READING RGNL/CARL A SPAATZ FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014847",
+      "code": "AVP",
+      "icao": "KAVP",
+      "name": "WILKES-BARRE/SCRANTON INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014938",
+      "code": "PVD",
+      "icao": "KPVD",
+      "name": "RHODE ISLAND TF GREEN INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014969",
+      "code": "NBC",
+      "icao": "KNBC",
+      "name": "BEAUFORT MCAS (MERRITT FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0014985",
+      "code": "CHS",
+      "icao": "KCHS",
+      "name": "CHARLESTON AFB/INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015014",
+      "code": "MMT",
+      "icao": "KMMT",
+      "name": "MC ENTIRE JNGB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015037",
+      "code": "GMU",
+      "icao": "KGMU",
+      "name": "GREENVILLE DOWNTOWN",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015041",
+      "code": "GYH",
+      "icao": "KGYH",
+      "name": "DONALDSON FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015054",
+      "code": "HXD",
+      "icao": "KHXD",
+      "name": "HILTON HEAD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015137",
+      "code": "SSC",
+      "icao": "KSSC",
+      "name": "SHAW AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015309",
+      "code": "FSD",
+      "icao": "KFSD",
+      "name": "JOE FOSS FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015572",
+      "code": "MEM",
+      "icao": "KMEM",
+      "name": "MEMPHIS INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0015607",
+      "code": "JWN",
+      "icao": "KJWN",
+      "name": "JOHN C TUNE",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016116",
+      "code": "NGW",
+      "icao": "KNGW",
+      "name": "CABANISS FLD NOLF",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016188",
+      "code": "ADS",
+      "icao": "KADS",
+      "name": "ADDISON",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016240",
+      "code": "DLF",
+      "icao": "KDLF",
+      "name": "LAUGHLIN AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016369",
+      "code": "BIF",
+      "icao": "KBIF",
+      "name": "BIGGS AAF (FORT BLISS)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016396",
+      "code": "NFW",
+      "icao": "KNFW",
+      "name": "FORT WORTH NAS JRB (CARSWELL FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016621",
+      "code": "EFD",
+      "icao": "KEFD",
+      "name": "ELLINGTON",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016785",
+      "code": "NQI",
+      "icao": "KNQI",
+      "name": "KINGSVILLE NAS",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0016836",
+      "code": "LRD",
+      "icao": "KLRD",
+      "name": "LAREDO INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017123",
+      "code": "NOG",
+      "icao": "KNOG",
+      "name": "ORANGE GROVE NALF",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017362",
+      "code": "SKF",
+      "icao": "KSKF",
+      "name": "KELLY FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017419",
+      "code": "SEQ",
+      "icao": "KSEQ",
+      "name": "RANDOLPH AFB AUX",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017571",
+      "code": "RND",
+      "icao": "KRND",
+      "name": "RANDOLPH AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017693",
+      "code": "SPS",
+      "icao": "KSPS",
+      "name": "SHEPPARD AFB/WICHITA FALLS MUNI",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017770",
+      "code": "DPG",
+      "icao": "KDPG",
+      "name": "MICHAEL AAF (DUGWAY PROVING GROUND)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0017853",
+      "code": "HIF",
+      "icao": "KHIF",
+      "name": "HILL AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018074",
+      "code": "LFI",
+      "icao": "KLFI",
+      "name": "LANGLEY AFB",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018169",
+      "code": "NGU",
+      "icao": "KNGU",
+      "name": "NORFOLK NS (CHAMBERS FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018230",
+      "code": "ROA",
+      "icao": "KROA",
+      "name": "ROANOKE/BLACKSBURG RGNL (WOODRUM FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018278",
+      "code": "NTU",
+      "icao": "KNTU",
+      "name": "OCEANA NAS (APOLLO SOUCEK FLD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018284",
+      "code": "WAL",
+      "icao": "KWAL",
+      "name": "WALLOPS FLIGHT FACILITY",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018349",
+      "code": "BTV",
+      "icao": "KBTV",
+      "name": "PATRICK LEAHY BURLINGTON INTL",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0018883",
+      "code": "TCM",
+      "icao": "KTCM",
+      "name": "MCCHORD FLD (JOINT BASE LEWIS-MCCHORD)",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0019030",
+      "code": "VOK",
+      "icao": "KVOK",
+      "name": "VOLK FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0019214",
+      "code": "MSN",
+      "icao": "KMSN",
+      "name": "DANE COUNTY RGNL/TRUAX FLD",
+      "metar_category": null
+    },
+    {
+      "airport_id": "AH_0019519",
+      "code": "CRW",
+      "icao": "KCRW",
+      "name": "WEST VIRGINIA INTL YEAGER",
+      "metar_category": null
+    }
+  ],
+  "updated_at_iso": "2025-08-29T21:18:47Z"
+}

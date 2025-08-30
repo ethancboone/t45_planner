@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arresting Gear Airfields</title>
+  <meta name="description" content="A lightweight planner to find and explore US airfields with arresting gear. Filter by gear type and runway specs, then switch to a map view." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0d6efd" />
+  <link rel="icon" href="data:," />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Apply stored or preferred theme ASAP to avoid flash of wrong theme
+    (function() {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const mode = stored || 'auto';
+        const effective = mode === 'dark' ? 'dark' : mode === 'light' ? 'light' : (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-bs-theme', effective);
+      } catch (_) {}
+    })();
+  </script>
+</head>
+<body class="bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-body border-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-semibold text-decoration-none" href="index.html">✈️ Arresting Gear Airfields</a>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <div class="dropdown">
+          <button id="themeMenuButton" class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Theme</button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeMenuButton">
+            <li><button class="dropdown-item theme-option" data-theme="light" type="button">Light</button></li>
+            <li><button class="dropdown-item theme-option" data-theme="dark" type="button">Dark</button></li>
+            <li><button class="dropdown-item theme-option" data-theme="auto" type="button">Auto (System)</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="py-5 bg-body">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <h1 class="display-6 fw-semibold mb-3">Find Airfields With Arresting Gear</h1>
+            <p class="lead mb-3">A lightweight planner to quickly locate US airfields with arresting gear. Filter by gear type and runway dimensions, browse a clean table view, and switch to an interactive map.</p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <a href="planner.html" class="btn btn-primary btn-lg">Open Planner</a>
+              <a href="data/airfields.json" class="btn btn-outline-secondary btn-lg">Browse Data</a>
+            </div>
+            <div class="card border-0 shadow-sm mt-2" style="max-width: 36rem;">
+              <div class="card-body py-3">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                  <span class="fw-semibold">Data Currency</span>
+                  <span id="dataStatusBadge" class="badge text-bg-secondary">Checking…</span>
+                </div>
+                <div class="small text-secondary mt-1">
+                  <div>Current as of: <span id="dataCurrent">—</span></div>
+                  <div>Consider refresh after: <span id="dataExpires">—</span> <span id="dataExpiresDelta" class="ms-1"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card shadow-sm border-0 overflow-hidden">
+              <div class="ratio ratio-16x9 bg-body-secondary d-flex align-items-center justify-content-center">
+                <div class="p-3 text-center">
+                  <div class="fw-semibold mb-1">What you can do</div>
+                  <ul class="list-unstyled small text-secondary text-start mx-auto" style="max-width: 28rem;">
+                    <li>• Filter by minimum runway length and width</li>
+                    <li>• Include specific gear types (e.g., BAK‑12, MB60, EMAS)</li>
+                    <li>• Sort alphabetically or group results by state</li>
+                    <li>• View results on an interactive map with popups</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 border-top">
+      <div class="container">
+        <h2 class="h4 mb-3">How To Use</h2>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <div class="fw-semibold mb-1">1) Set Filters</div>
+                <p class="text-secondary mb-0 small">Choose minimum runway length/width and select gear types to include. The list updates instantly.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <div class="fw-semibold mb-1">2) Sort & Scan</div>
+                <p class="text-secondary mb-0 small">Sort alphabetically by code or name, or group by state to scan regional options.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <div class="fw-semibold mb-1">3) Map It</div>
+                <p class="text-secondary mb-0 small">Switch to the Map tab to view results spatially. Hover or click markers for details.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info mt-4 small mb-0" role="alert">
+          Tip: The app runs entirely in your browser. No sign‑in, no server‑side state.
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 border-top">
+      <div class="container">
+        <h2 class="h4 mb-2">About</h2>
+        <p class="text-secondary mb-2">This tool is for quick planning and exploration. Data may have gaps or inaccuracies; verify details through official sources before operational use.</p>
+        <a class="btn btn-outline-primary" href="planner.html">Start Planning</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer container py-4 border-top">
+    <div class="small text-center">Built for quick planning and exploration • T-45</div>
+  </footer>
+
+  <!-- Bootstrap JS (for theme dropdown) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    // Basic theme dropdown wiring (reuses the same localStorage key as the planner)
+    (function() {
+      const THEME_KEY = 'theme';
+      function setStoredMode(mode) { try { localStorage.setItem(THEME_KEY, mode); } catch (_) {} }
+      function effectiveTheme(mode) {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (mode === 'dark' || mode === 'light') return mode;
+        return prefersDark ? 'dark' : 'light';
+      }
+      function label(mode) { return mode === 'auto' ? 'Theme: Auto' : (mode === 'dark' ? 'Theme: Dark' : 'Theme: Light'); }
+      function apply(mode) {
+        document.documentElement.setAttribute('data-bs-theme', effectiveTheme(mode));
+        const btn = document.getElementById('themeMenuButton');
+        if (btn) btn.textContent = label(mode);
+      }
+      const stored = (function(){ try { return localStorage.getItem(THEME_KEY) || 'auto'; } catch (_) { return 'auto'; } })();
+      apply(stored);
+      document.querySelectorAll('.theme-option').forEach(el => el.addEventListener('click', () => {
+        const m = el.getAttribute('data-theme');
+        if (m) { setStoredMode(m); apply(m); }
+      }));
+    })();
+  </script>
+  <script>
+    // Data currency widget (tries data/meta.json, falls back to Last-Modified of airfields.json)
+    (function() {
+      const DAY = 24 * 60 * 60 * 1000;
+      const CYCLE_DAYS_DEFAULT = 28;
+      const elCurrent = document.getElementById('dataCurrent');
+      const elExpires = document.getElementById('dataExpires');
+      const elExpiresDelta = document.getElementById('dataExpiresDelta');
+      const badge = document.getElementById('dataStatusBadge');
+
+      function fmt(d) {
+        try { return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' }); } catch (_) { return d.toISOString().slice(0,10); }
+      }
+      function setBadge(isStale) {
+        badge.textContent = isStale ? 'Stale' : 'Current';
+        badge.className = 'badge ' + (isStale ? 'text-bg-warning' : 'text-bg-success');
+      }
+      function setDelta(msUntil) {
+        if (!isFinite(msUntil)) { elExpiresDelta.textContent = ''; return; }
+        const days = Math.round(msUntil / DAY);
+        elExpiresDelta.textContent = days === 0 ? '(today)' : days > 0 ? `(in ${days} days)` : `(${Math.abs(days)} days ago)`;
+      }
+
+      async function loadMeta() {
+        try {
+          const r = await fetch('data/meta.json', { cache: 'no-store' });
+          if (r.ok) return r.json();
+        } catch (_) {}
+        return null;
+      }
+      async function loadLastModified() {
+        try {
+          // HEAD is ideal, but GET is more widely allowed on static servers
+          const r = await fetch('data/airfields.json', { method: 'GET' });
+          const lm = r.headers.get('last-modified');
+          if (lm) return new Date(lm);
+        } catch (_) {}
+        return null;
+      }
+
+      (async () => {
+        let effectiveDate = null;
+        let generatedAt = null;
+        let cycleDays = CYCLE_DAYS_DEFAULT;
+        const meta = await loadMeta();
+        if (meta) {
+          // expected fields: { effective_date: 'YYYY-MM-DD', generated_at: ISO, cycle_length_days: number }
+          if (meta.cycle_length_days && Number.isFinite(meta.cycle_length_days)) cycleDays = meta.cycle_length_days;
+          if (meta.effective_date) effectiveDate = new Date(meta.effective_date + 'T00:00:00Z');
+          if (meta.generated_at) generatedAt = new Date(meta.generated_at);
+        }
+        if (!effectiveDate) {
+          // fall back to Last-Modified of dataset
+          effectiveDate = await loadLastModified();
+        }
+        const base = effectiveDate || new Date();
+        const expires = new Date(base.getTime() + cycleDays * DAY);
+        const now = new Date();
+        elCurrent.textContent = fmt(base);
+        elExpires.textContent = fmt(expires);
+        setDelta(expires.getTime() - now.getTime());
+        setBadge(now.getTime() > expires.getTime());
+      })();
+    })();
+  </script>
+</body>
+</html>
