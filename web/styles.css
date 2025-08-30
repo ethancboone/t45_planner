@@ -63,20 +63,7 @@ body { background: var(--bs-body-bg); }
   #filtersCard { position: static; }
 }
 
-/* Table pane as a responsive 2-col layout (sidebar + content) */
-#tablePane {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-@media (min-width: 768px) {
-  #tablePane {
-    grid-template-columns: minmax(240px, 320px) 1fr;
-    align-items: start;
-  }
-  #tablePane #filtersCard { grid-column: 1; grid-row: 1; align-self: start; }
-  #tablePane .results-wrap { grid-column: 2; grid-row: 1; align-self: start; }
-}
+/* Simplified: no special grid in table pane; layout handled by columns in HTML */
 
 /* Map height and rounding */
 #map { height: 70vh; border-radius: .75rem; }

@@ -370,12 +370,6 @@ function wireUI(all) {
   const mapTab = document.getElementById('map-tab');
   if (mapTab) {
     mapTab.addEventListener('shown.bs.tab', () => {
-      // Ensure user sees the map at the very top
-      try {
-        const mapEl = document.getElementById('map');
-        if (mapEl) mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        else window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (_) {}
       document.body.classList.add('map-mode');
       if (!mapInited) initMap(all);
       // Ensure Leaflet sizes after the fade/display swap completes
