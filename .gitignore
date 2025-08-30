@@ -1,5 +1,9 @@
 /data/
 
+# Project-specific ignores
+# Python pycache prefix output (prevents redundant mirror tree)
+t45_planner/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
