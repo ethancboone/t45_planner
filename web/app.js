@@ -383,6 +383,7 @@ let mapInited = false;
 let markerLayer = null;
 let baseLight = null;
 let baseDark = null;
+let refLayer = null;
 // (METAR timestamp removed)
 const markerStyle = {
   radius: 7,
@@ -415,6 +416,7 @@ function initMap(all) {
     const theme = document.documentElement.getAttribute('data-bs-theme') || 'light';
     (theme === 'dark' ? baseDark : baseLight).addTo(mapInstance);
     markerLayer = L.layerGroup().addTo(mapInstance);
+    refLayer = L.layerGroup().addTo(mapInstance);
   } else {
     mapInstance.setView([KMEI.lat, KMEI.lon], 8);
   }
@@ -462,6 +464,43 @@ function renderMarkers(data) {
   }
 }
 
+function updateRefOverlay(all) {
+  if (!mapInstance || !refLayer) return;
+  refLayer.clearLayers();
+  const { refField, maxDistance } = getFilters();
+  const ref = refField && maxDistance ? resolveRef(all, refField) : null;
+  const refLat = ref?.lat ?? ref?.latitude;
+  const refLon = ref?.lon ?? ref?.longitude;
+  const haveRef = typeof refLat === 'number' && typeof refLon === 'number' && typeof maxDistance === 'number';
+  if (!haveRef) return;
+  // Recenter map on the reference field
+  mapInstance.setView([refLat, refLon], Math.max(mapInstance.getZoom(), 8));
+  // Add a distinct reference marker
+  const refMarker = L.circleMarker([refLat, refLon], {
+    radius: 8,
+    fillColor: '#F59E0B', // amber
+    color: '#FFFFFF',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.95,
+  });
+  const code = String(ref.icao || ref.code || '').toUpperCase();
+  const nm = ref.name || '';
+  refMarker.bindPopup(`<div class="fw-semibold">${code}${nm ? ' — ' + nm : ''}</div>`);
+  refMarker.addTo(refLayer);
+  // Draw radius circle (NM -> meters)
+  const meters = Number(maxDistance) * 1852;
+  const circle = L.circle([refLat, refLon], {
+    radius: meters,
+    color: '#0d6efd',
+    weight: 1,
+    opacity: 0.8,
+    fillColor: '#0d6efd',
+    fillOpacity: 0.08,
+  });
+  circle.addTo(refLayer);
+}
+
 function wireUI(all) {
   AIRFIELDS = all;
   const inputs = [
@@ -478,7 +517,10 @@ function wireUI(all) {
     const group = sortMode === 'state_group';
     renderList(sorted, { group });
     updateSummary(all.length, sorted.length);
-    if (mapInited) renderMarkers(sorted);
+    if (mapInited) {
+      renderMarkers(sorted);
+      updateRefOverlay(all);
+    }
   };
   inputs.forEach(i => i.addEventListener('input', onChange));
   inputs.forEach(i => i.addEventListener('change', onChange));
@@ -506,6 +548,7 @@ function wireUI(all) {
       const filtered = applyFilters(all);
       const sorted = sortData(filtered, currentSort());
       renderMarkers(sorted);
+      updateRefOverlay(all);
     });
   }
   // Remove map-mode when switching back to Table tab
@@ -522,6 +565,7 @@ function wireUI(all) {
       const filtered = applyFilters(all);
       const sorted = sortData(filtered, currentSort());
       renderMarkers(sorted);
+      updateRefOverlay(all);
     } else if (typeof L === 'undefined') {
       const ms = document.getElementById('mapSummary');
       if (ms) ms.textContent = 'Map library failed to load';
