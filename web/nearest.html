@@ -50,49 +50,57 @@
   </nav>
 
   <main class="container py-4">
-    <div class="row g-3">
-      <div class="col-12 col-lg-5 col-xxl-4">
-        <header class="mb-3">
-          <h1 class="h4 mb-1">Find Nearest Airfields</h1>
-          <p class="text-secondary mb-0">Enter a destination airfield (ICAO or FAA). Shows the five closest fields by great-circle distance.</p>
-        </header>
+    <header class="mb-3">
+      <h1 class="h4 mb-1">Find Nearest Airfields</h1>
+      <p class="text-secondary mb-0">Enter a destination airfield (ICAO or FAA). Shows the five closest fields by great-circle distance.</p>
+    </header>
 
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <div class="row g-3 align-items-end">
-              <div class="col-sm-8 col-md-6 col-lg-5">
-                <label for="destField" class="form-label">Destination Airfield (ICAO/FAA)</label>
-                <input type="text" id="destField" class="form-control" placeholder="e.g., KNKT or NKT" inputmode="latin" autocapitalize="characters">
-              </div>
-              <div class="col-sm-4 col-md-3 col-lg-2 d-grid">
-                <button id="findBtn" class="btn btn-primary">Find Nearest</button>
-              </div>
-              <div class="col-12 col-lg-5">
-                <div id="status" class="small text-secondary"></div>
-              </div>
+    <section class="mb-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="row g-3 align-items-end">
+            <div class="col-sm-8 col-md-6 col-lg-4">
+              <label for="destField" class="form-label">Destination Airfield (ICAO/FAA)</label>
+              <input type="text" id="destField" class="form-control" placeholder="e.g., KNKT or NKT" inputmode="latin" autocapitalize="characters">
             </div>
-          </div>
-        </div>
-
-        <div class="mt-3">
-          <ul id="results" class="list-group"></ul>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-7 col-xxl-8">
-        <div class="content-wrap">
-          <div class="card shadow-sm">
-            <div class="card-body p-2">
-              <div id="map" class="w-100"></div>
-              <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap px-2 py-2">
-                <div id="mapSummary" class="text-secondary small">Map ready</div>
-                <div id="mapRef" class="text-secondary small"></div>
-              </div>
+            <div class="col-sm-4 col-md-3 col-lg-2 d-grid">
+              <button id="findBtn" class="btn btn-primary">Find Nearest</button>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div id="status" class="small text-secondary"></div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="mb-3">
+      <ul id="results" class="list-group"></ul>
+    </section>
+
+    <section class="mb-3">
+      <div class="card shadow-sm">
+        <div class="card-body p-2">
+          <div id="map" class="w-100"></div>
+          <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap px-2 py-2">
+            <div id="mapSummary" class="text-secondary small">Map</div>
+            <div id="mapRef" class="text-secondary small"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-3">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <span class="fw-semibold">Testing</span>
+          <button id="runTestsBtn" class="btn btn-sm btn-outline-secondary">Run Tests</button>
+        </div>
+        <div class="card-body">
+          <ul id="testResults" class="list-group"></ul>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="app-footer container py-4">
